@@ -20,7 +20,7 @@ Implement a basic hash table without collision resolution.
 You can test this with:
 
 ```shell
-python test_hashtable_no_collisions.py
+python test_hash_table_no_collisions.py
 ```
 
 The above test program is _unlikely_ to have collisions, but it's
@@ -38,12 +38,12 @@ Implement linked-list chaining for collision resolution.
 You can test this with:
 
 ```shell
-python test_hashtable.py
+python test_hash_table.py
 ```
 
 ## Day 3
 
-Implement load factor measurements and automatic hashtable size
+Implement load factor measurements and automatic hash table size
 doubling.
 
 1.  Compute and maintain load factor.
@@ -55,10 +55,10 @@ the table to half its previous size, down to a minimum of 128 slots.
 
 ## Day 4
 
-Work on the `hashtable` applications directory (in any order you
+Work on the `hash_table` applications directory (in any order you
 wish--generally arranged from easier to harder, below).
 
-For these, you can use either the built-in `dict` type, or the hashtable
+For these, you can use either the built-in `dict` type, or the hash table
 you built. (Some of these are easier with `dict` since it's more
 full-featured.)
 

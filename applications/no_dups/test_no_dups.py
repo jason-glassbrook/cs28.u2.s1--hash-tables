@@ -18,5 +18,5 @@ class TestNoDups(unittest.TestCase):
         self.assertTrue(x == "spam eggs sausage and")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

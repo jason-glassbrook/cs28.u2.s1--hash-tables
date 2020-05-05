@@ -70,8 +70,6 @@ class HashTable:
     def djb2_hash(self, string):
         """
         DJB2 32-bit hash function
-
-        Implement this and/or FNV-1.
         """
 
         s_bytes = str(string).encode()
@@ -87,10 +85,32 @@ class HashTable:
     def fnv1_hash(self, string):
         """
         FNV-1 64-bit hash function
-
-        Implement this and/or DJB2.
         """
-        pass
+
+        s_bytes = str(string).encode()
+        s_hash = 0xCBF29CE484222325
+
+        for b in s_bytes:
+            s_hash *= 0x100000001B3
+            s_hash += b
+            s_hash &= 0xFFFFFFFFFFFFFFFF
+
+        return s_hash
+
+    def fnv1a_hash(self, string):
+        """
+        FNV-1a 64-bit hash function
+        """
+
+        s_bytes = str(string).encode()
+        s_hash = 0xCBF29CE484222325
+
+        for b in s_bytes:
+            s_hash += b
+            s_hash *= 0x100000001B3
+            s_hash &= 0xFFFFFFFFFFFFFFFF
+
+        return s_hash
 
     ########################################
     #   indexing
@@ -102,9 +122,10 @@ class HashTable:
         between within the storage `bucket_count` of the hash table.
         """
 
-        index = self.naive_hash(key) % self.__bucket_count
-        # index = self.fnv1_hash(key) % self.__bucket_count
+        # index = self.naive_hash(key) % self.__bucket_count
         # index = self.djb2_hash(key) % self.__bucket_count
+        # index = self.fnv1_hash(key) % self.__bucket_count
+        index = self.fnv1a_hash(key) % self.__bucket_count
 
         print(f"hash_index({repr(key)}) => {repr(index)}")
 

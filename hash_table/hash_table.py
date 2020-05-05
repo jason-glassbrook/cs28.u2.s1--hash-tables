@@ -134,6 +134,12 @@ class HashTable:
         Implement this.
         """
 
+        index = self.hash_index(key)
+        value = self.__array[index]
+
+        print(f"array[{repr(index)}] => {repr(value)}")
+        return
+
     def resize(self):
         """
         Doubles the `bucket_count` of the hash table and

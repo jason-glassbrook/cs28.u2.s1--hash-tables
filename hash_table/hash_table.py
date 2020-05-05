@@ -73,7 +73,16 @@ class HashTable:
 
         Implement this and/or FNV-1.
         """
-        pass
+
+        s_bytes = str(string).encode()
+        s_hash = 5381
+
+        for b in s_bytes:
+            s_hash *= 0x21
+            s_hash += b
+            s_hash &= 0xFFFFFFFF
+
+        return s_hash
 
     def fnv1_hash(self, string):
         """

@@ -49,12 +49,6 @@ class DoublyLinkedNode:
 
         return
 
-    def pop_before(self):
-        pass
-
-    def pop_after(self):
-        pass
-
     def pop(self):
         """
         Rearranges this node's references, effectively deleting this node.
@@ -70,6 +64,28 @@ class DoublyLinkedNode:
             self.next_node.prev_node = self.prev_node
 
         return value
+
+    def pop_before(self):
+        """
+        Pop this node's `prev_node`.
+        """
+
+        if self.prev_node:
+            return self.prev_node.pop()
+
+        else:
+            return None
+
+    def pop_after(self):
+        """
+        Pop this node's `next_node`.
+        """
+
+        if self.next_node:
+            return self.next_node.pop()
+
+        else:
+            return None
 
 
 ########################################

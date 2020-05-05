@@ -119,6 +119,12 @@ class HashTable:
         Implement this.
         """
 
+        index = self.hash_index(key)
+        self.__array[index] = self.__default_value
+
+        print(f"array[{repr(index)}] := {repr(self.__default_value)}")
+        return
+
     def get(self, key):
         """
         Retrieve the value stored with the given key.

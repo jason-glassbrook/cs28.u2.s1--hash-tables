@@ -1,4 +1,8 @@
 ############################################################
+
+from iter_tools import is_iterable
+
+############################################################
 #   DOUBLY LINKED LIST (DLL)
 ############################################################
 
@@ -100,11 +104,15 @@ class DoublyLinkedList:
     -   `tail_node`: a reference to the list's tail node.
     """
 
-    def __init__(self, node=None):
+    def __init__(self, node=None, values=None):
 
         self.head_node = node
         self.tail_node = node
         self.__length = 1 if node is not None else 0
+
+        if is_iterable(values):
+            for value in values:
+                self.push_to_tail(value)
 
         return
 

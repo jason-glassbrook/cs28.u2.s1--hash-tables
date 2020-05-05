@@ -16,6 +16,14 @@ def naive_hash(string, table_size):
     return total
 
 
+def djb2_hash(string):
+    pass
+
+
+def fnv1_hash(string):
+    pass
+
+
 ############################################################
 #   hash table
 ############################################################

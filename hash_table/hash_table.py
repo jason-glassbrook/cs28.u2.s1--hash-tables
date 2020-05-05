@@ -137,7 +137,7 @@ class HashTable:
 
         index = self.__hash(key) % self.__bucket_count
 
-        print(f"hash_index({repr(key)}) => {repr(index)}")
+        # print(f"hash_index({repr(key)}) => {repr(index)}")
 
         return index
 
@@ -155,7 +155,7 @@ class HashTable:
         index = self.hash_index(key)
         self.__array[index] = value
 
-        print(f"array[{repr(index)}] := {repr(value)}")
+        # print(f"array[{repr(index)}] := {repr(value)}")
 
         return
 
@@ -169,7 +169,7 @@ class HashTable:
         index = self.hash_index(key)
         value = self.__array[index]
 
-        print(f"array[{repr(index)}] => {repr(value)}")
+        # print(f"array[{repr(index)}] => {repr(value)}")
 
         return value
 

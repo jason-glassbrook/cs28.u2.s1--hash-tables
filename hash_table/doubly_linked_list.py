@@ -104,15 +104,22 @@ class DoublyLinkedList:
     -   `tail_node`: a reference to the list's tail node.
     """
 
-    def __init__(self, node=None, values=None):
+    def __init__(
+        self,
+        value=None,
+        value_iter=None,
+    ):
 
-        self.head_node = node
-        self.tail_node = node
-        self.__length = 1 if node is not None else 0
+        self.head_node = None
+        self.tail_node = None
+        self.__length = 0
 
-        if is_iterable(values):
-            for value in values:
+        if is_iterable(value_iter):
+            for value in value_iter:
                 self.push_to_tail(value)
+
+        elif value is not None:
+            self.push_to_tail(value)
 
         return
 

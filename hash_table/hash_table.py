@@ -2,6 +2,20 @@
 #   hashing functions
 ############################################################
 
+
+def naive_hash(string, table_size):
+
+    string_bytes = str(string).encode()
+
+    total = 0
+
+    for b in string_bytes:
+        total += b
+        total &= 0xffffffff
+
+    return total
+
+
 ############################################################
 #   hash table
 ############################################################

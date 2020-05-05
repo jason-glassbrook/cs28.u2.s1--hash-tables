@@ -99,63 +99,49 @@ class HashTable:
         # index = self.djb2_hash(key) % self.__bucket_count
 
         print(f"hash_index({repr(key)}) => {repr(index)}")
+
         return index
 
     ########################################
     #   table mutation
     ########################################
 
-    def set(self, key, value):
+    def __setitem__(self, key, value):
         """
-        Store the value with the given key.
+        Set the value stored with the given key.
 
         Hash collisions should be handled with Linked List Chaining.
-
-        Implement this.
         """
 
         index = self.hash_index(key)
         self.__array[index] = value
 
         print(f"array[{repr(index)}] := {repr(value)}")
+
         return
 
-    def put(self, *args, **kwargs):
+    def __getitem__(self, key):
         """
-        Alias of `set`.
-        """
+        Get the value stored with the given key.
 
-        return self.set(*args, **kwargs)
-
-    def delete(self, key):
-        """
-        Remove the value stored with the given key.
-
-        Print a warning if the key is not found.
-
-        Implement this.
-        """
-
-        index = self.hash_index(key)
-        self.__array[index] = self.__default_value
-
-        print(f"array[{repr(index)}] := {repr(self.__default_value)}")
-        return
-
-    def get(self, key):
-        """
-        Retrieve the value stored with the given key.
-
-        Returns None if the key is not found.
-
-        Implement this.
+        Returns `default_value` if the key is not found.
         """
 
         index = self.hash_index(key)
         value = self.__array[index]
 
         print(f"array[{repr(index)}] => {repr(value)}")
+
         return value
+
+    def __delitem__(self, key):
+        """
+        Remove the value stored with the given key.
+        """
+
+        self[key] = self.__default_value
+
+        return
 
     def resize(self):
         """
@@ -164,6 +150,26 @@ class HashTable:
 
         Implement this.
         """
+        pass
+
+    ####################
+    #   other names
+    ####################
+
+    def set(self, key, value):
+        self[key] = value
+        return
+
+    def put(self, key, value):
+        self[key] = value
+        return
+
+    def get(self, key):
+        return self[key]
+
+    def delete(self, key):
+        del self[key]
+        return
 
 
 ############################################################

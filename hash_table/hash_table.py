@@ -27,10 +27,20 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, bucket_count=128, default_value=None):
+    def __init__(
+        self,
+        bucket_count=128,
+        min_bucket_count=None,
+        max_bucket_count=None,
+        default_value=None,
+    ):
 
         self.__bucket_count = bucket_count
+        self.__min_bucket_count = min_bucket_count
+        self.__max_bucket_count = max_bucket_count
+
         self.__default_value = default_value
+
         self.__array = [default_value] * bucket_count
 
         return

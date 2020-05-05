@@ -33,6 +33,7 @@ class HashTable:
         min_bucket_count=None,
         max_bucket_count=None,
         default_value=None,
+        hasher="fnv1a",
     ):
 
         self.__bucket_count = bucket_count
@@ -40,6 +41,11 @@ class HashTable:
         self.__max_bucket_count = max_bucket_count
 
         self.__default_value = default_value
+
+        if hasher not in HashTable.hashers:
+            raise Exception("UnknownHasherError")
+        else:
+            self.__hash = getattr(self, f"{hasher}_hash")
 
         self.__array = [default_value] * bucket_count
 
@@ -52,6 +58,13 @@ class HashTable:
     ########################################
     #   hashing functions
     ########################################
+
+    hashers = (
+        "naive",
+        "djb2",
+        "fnv1",
+        "fnv1a",
+    )
 
     def naive_hash(self, string):
         """
@@ -122,10 +135,7 @@ class HashTable:
         between within the storage `bucket_count` of the hash table.
         """
 
-        # index = self.naive_hash(key) % self.__bucket_count
-        # index = self.djb2_hash(key) % self.__bucket_count
-        # index = self.fnv1_hash(key) % self.__bucket_count
-        index = self.fnv1a_hash(key) % self.__bucket_count
+        index = self.__hash(key) % self.__bucket_count
 
         print(f"hash_index({repr(key)}) => {repr(index)}")
 

@@ -83,9 +83,13 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage `bucket_count` of the hash table.
         """
-        return self.naive_hash(key) % self.capacity
-        # return self.fnv1(key) % self.capacity
-        # return self.djb2(key) % self.capacity
+
+        index = self.naive_hash(key) % self.__bucket_count
+        # index = self.fnv1_hash(key) % self.__bucket_count
+        # index = self.djb2_hash(key) % self.__bucket_count
+
+        print(f"hash_index({repr(key)}) => {repr(index)}")
+        return index
 
     ########################################
     #   table mutation

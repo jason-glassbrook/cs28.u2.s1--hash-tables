@@ -21,11 +21,19 @@ class HashTableEntry:
 
 class HashTable:
     """
-    A hash table that with `capacity` buckets
+    A hash table with `bucket_count` buckets
     that accepts string keys
 
     Implement this.
     """
+
+    def __init__(self, bucket_count=128, default_value=None):
+
+        self.__bucket_count = bucket_count
+        self.__default_value = default_value
+        self.__array = [default_value] * bucket_count
+
+        return
 
     ########################################
     #   hashing functions

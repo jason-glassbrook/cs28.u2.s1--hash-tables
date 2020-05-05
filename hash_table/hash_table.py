@@ -35,6 +35,10 @@ class HashTable:
 
         return
 
+    def __len__(self):
+
+        return len(self.__array)
+
     ########################################
     #   hashing functions
     ########################################

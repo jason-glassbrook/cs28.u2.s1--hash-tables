@@ -62,7 +62,7 @@ class HashTable:
         """
         DJB2 32-bit hash function
 
-        Implement this, and/or FNV-1.
+        Implement this and/or FNV-1.
         """
         pass
 
@@ -70,7 +70,7 @@ class HashTable:
         """
         FNV-1 64-bit hash function
 
-        Implement this, and/or DJB2.
+        Implement this and/or DJB2.
         """
         pass
 
@@ -81,7 +81,7 @@ class HashTable:
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
-        between within the storage capacity of the hash table.
+        between within the storage `bucket_count` of the hash table.
         """
         return self.naive_hash(key) % self.capacity
         # return self.fnv1(key) % self.capacity
@@ -120,7 +120,7 @@ class HashTable:
 
     def resize(self):
         """
-        Doubles the capacity of the hash table and
+        Doubles the `bucket_count` of the hash table and
         rehash all key/value pairs.
 
         Implement this.
@@ -131,29 +131,29 @@ class HashTable:
 
 if __name__ == "__main__":
 
-    ht = HashTable(2)
+    ht = HashTable(bucket_count=2)
 
-    ht.put("line_1", "Tiny hash table")
-    ht.put("line_2", "Filled beyond capacity")
+    ht.put("line_1", "Tiny hash table!")
+    ht.put("line_2", "Filled beyond capacity!")
     ht.put("line_3", "Linked list saves the day!")
 
-    print("")
+    print()
 
-    # Test storing beyond capacity
+    # Test storing beyond bucket_count
     print(ht.get("line_1"))
     print(ht.get("line_2"))
     print(ht.get("line_3"))
 
     # Test resizing
-    old_capacity = len(ht.storage)
+    old_bucket_count = len(ht)
     ht.resize()
-    new_capacity = len(ht.storage)
+    new_bucket_count = len(ht)
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    print(f"\nResized from {old_bucket_count} to {new_bucket_count}.\n")
 
     # Test if data intact after resizing
     print(ht.get("line_1"))
     print(ht.get("line_2"))
     print(ht.get("line_3"))
 
-    print("")
+    print()

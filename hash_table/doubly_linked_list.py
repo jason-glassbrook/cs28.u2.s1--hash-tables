@@ -112,6 +112,16 @@ class DoublyLinkedList:
 
         return self.__length
 
+    def __iter__(self):
+
+        node = self.head_node
+
+        while node is not None:
+            yield (node.value, node)
+            node = node.next_node
+
+        return
+
     def push_to_head(self, value):
         """
         Wrap `value` in a node and insert it as this list's new `head_node`.

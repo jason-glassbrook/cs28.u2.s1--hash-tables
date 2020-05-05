@@ -1,31 +1,5 @@
 ############################################################
-#   hashing functions
-############################################################
-
-
-def naive_hash(string, table_size):
-
-    string_bytes = str(string).encode()
-
-    total = 0
-
-    for b in string_bytes:
-        total += b
-        total &= 0xffffffff
-
-    return total
-
-
-def djb2_hash(string):
-    pass
-
-
-def fnv1_hash(string):
-    pass
-
-
-############################################################
-#   hash table
+#   hash table entry
 ############################################################
 
 
@@ -40,6 +14,11 @@ class HashTableEntry:
         self.next = None
 
 
+############################################################
+#   hash table
+############################################################
+
+
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -48,27 +27,57 @@ class HashTable:
     Implement this.
     """
 
-    def fnv1(self, key):
-        """
-        FNV-1 64-bit hash function
+    ########################################
+    #   hashing functions
+    ########################################
 
-        Implement this, and/or DJB2.
+    def naive_hash(self, string):
+        """
+        Naïve hash from string to integer.
         """
 
-    def djb2(self, key):
+        string_bytes = str(string).encode()
+
+        total = 0
+
+        for b in string_bytes:
+            total += b
+            total &= 0xffffffff
+
+        return total
+
+    def djb2_hash(self, string):
         """
         DJB2 32-bit hash function
 
         Implement this, and/or FNV-1.
         """
+        pass
+
+    def fnv1_hash(self, string):
+        """
+        FNV-1 64-bit hash function
+
+        Implement this, and/or DJB2.
+        """
+        pass
+
+    ########################################
+    #   indexing
+    ########################################
 
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
+        return self.naive_hash(key) % self.capacity
         # return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        # return self.djb2(key) % self.capacity
+
+    ########################################
+    #   table mutation
+    ########################################
 
     def put(self, key, value):
         """

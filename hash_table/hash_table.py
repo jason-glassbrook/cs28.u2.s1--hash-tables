@@ -104,6 +104,12 @@ class HashTable:
         Implement this.
         """
 
+        index = self.hash_index(key)
+        self.__array[index] = value
+
+        print(f"array[{repr(index)}] := {repr(value)}")
+        return
+
     def delete(self, key):
         """
         Remove the value stored with the given key.

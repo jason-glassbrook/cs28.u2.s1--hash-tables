@@ -105,7 +105,7 @@ class HashTable:
     #   table mutation
     ########################################
 
-    def put(self, key, value):
+    def set(self, key, value):
         """
         Store the value with the given key.
 
@@ -119,6 +119,13 @@ class HashTable:
 
         print(f"array[{repr(index)}] := {repr(value)}")
         return
+
+    def put(self, *args, **kwargs):
+        """
+        Alias of `set`.
+        """
+
+        return self.set(*args, **kwargs)
 
     def delete(self, key):
         """

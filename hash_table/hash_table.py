@@ -138,7 +138,7 @@ class HashTable:
         value = self.__array[index]
 
         print(f"array[{repr(index)}] => {repr(value)}")
-        return
+        return value
 
     def resize(self):
         """

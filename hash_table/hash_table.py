@@ -58,15 +58,14 @@ class HashTable:
         Naïve hash from string to integer.
         """
 
-        string_bytes = str(string).encode()
+        s_bytes = str(string).encode()
+        s_hash = 0
 
-        total = 0
+        for b in s_bytes:
+            s_hash += b
+            s_hash &= 0xFFFFFFFF
 
-        for b in string_bytes:
-            total += b
-            total &= 0xffffffff
-
-        return total
+        return s_hash
 
     def djb2_hash(self, string):
         """

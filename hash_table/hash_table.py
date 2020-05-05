@@ -1,18 +1,6 @@
 ############################################################
-#   hash table entry
-############################################################
 
-
-class HashTableEntry:
-    """
-    Hash Table entry, as a linked list node.
-    """
-
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-        self.next = None
-
+from doubly_linked_list import DoublyLinkedList
 
 ############################################################
 #   hash table
@@ -47,7 +35,7 @@ class HashTable:
         else:
             self.__hash = getattr(self, f"{hasher}_hash")
 
-        self.__array = [default_value] * bucket_count
+        self.__array = [None] * bucket_count
 
         return
 
@@ -141,6 +129,16 @@ class HashTable:
 
         return index
 
+    @staticmethod
+    def find_node_by_key(key, chain):
+
+        node = None
+        for ((k, v), n) in chain:
+            if k == key:
+                node = n
+
+        return node
+
     ########################################
     #   table mutation
     ########################################
@@ -153,10 +151,27 @@ class HashTable:
         """
 
         index = self.hash_index(key)
-        self.__array[index] = value
+        chain = self.__array[index]
+
+        # if there's a chain at `index`, then...
+        if chain is not None:
+
+            # search it for `(key, value)`
+            node = self.find_node_by_key(key, chain)
+
+            # if found, update `value`
+            if node is not None:
+                node.value = (key, value)
+
+            # else, append `(key, value)` to the chain
+            else:
+                chain.push_to_tail((key, value))
+
+        # else, create a new chain
+        else:
+            self.__array[index] = DoublyLinkedList(value=(key, value))
 
         # print(f"array[{repr(index)}] := {repr(value)}")
-
         return
 
     def __getitem__(self, key):
@@ -167,10 +182,24 @@ class HashTable:
         """
 
         index = self.hash_index(key)
-        value = self.__array[index]
+        chain = self.__array[index]
+        value = self.__default_value
+
+        # if there's a chain at `index`, then...
+        if chain is not None:
+
+            # search it for `(key, value)`
+            node = self.find_node_by_key(key, chain)
+
+            # if found, return its `value`
+            if node is not None:
+                (__, value) = node.value
+
+            # else, return the default value (which we're already doing)
+
+        # else, there's nothing to do
 
         # print(f"array[{repr(index)}] => {repr(value)}")
-
         return value
 
     def __delitem__(self, key):
@@ -178,8 +207,28 @@ class HashTable:
         Remove the value stored with the given key.
         """
 
-        self[key] = self.__default_value
+        index = self.hash_index(key)
+        chain = self.__array[index]
 
+        # if there's a chain at `index`, then...
+        if chain is not None:
+
+            # search it for `(key, value)`
+            node = self.find_node_by_key(key, chain)
+
+            # if it exists, remove it
+            if node is not None:
+                chain.pop_node(node)
+
+            # else, do nothing
+
+        # else, do nothing
+
+        # if the chain is now empty, remove it
+        if len(chain) == 0:
+            self.__array[index] = None
+
+        # print(f"array[{repr(index)}] := {repr(value)}")
         return
 
     def resize(self):

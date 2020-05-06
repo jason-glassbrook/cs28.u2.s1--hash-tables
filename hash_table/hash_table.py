@@ -66,6 +66,16 @@ class HashTable:
 
         return len(self.__array)
 
+    @property
+    def item_count(self):
+
+        return self.__item_count
+
+    @property
+    def bucket_count(self):
+
+        return self.__bucket_count
+
     ########################################
     #   hashing functions
     ########################################
@@ -169,10 +179,7 @@ class HashTable:
 
     def resize(self):
         """
-        Doubles the `bucket_count` of the hash table and
-        rehash all key/value pairs.
-
-        Implement this.
+        Changes the `bucket_count` of the hash table and rehash all key/value pairs.
         """
         pass
 

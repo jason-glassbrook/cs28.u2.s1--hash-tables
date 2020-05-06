@@ -242,9 +242,19 @@ class HashTable:
 
     def resize(self):
         """
-        Changes the `bucket_count` of the hash table and rehash all key/value pairs.
+        Resize the hash table's internal array based on the current load factor.
+        Rehash all key-value pairs.
+        Returns the final `bucket_count`.
         """
-        pass
+
+        if self.load_factor >= self.load_before_resize_up:
+            return self.resize_up()
+
+        if self.load_factor <= self.load_before_resize_down:
+            return self.resize_down()
+
+        return self.bucket_count
+
 
     ########################################
     #   item access

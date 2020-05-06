@@ -64,7 +64,7 @@ class HashTable:
 
     def __len__(self):
 
-        return len(self.__array)
+        return self.item_count
 
     @property
     def item_count(self):

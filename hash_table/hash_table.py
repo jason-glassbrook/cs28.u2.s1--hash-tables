@@ -261,6 +261,10 @@ class HashTable:
     #   other names
     ####################
 
+    #-------------------
+    #   push_item
+    #-------------------
+
     def __setitem__(self, key, value):
         self.push_item(key, value)
         return
@@ -273,11 +277,26 @@ class HashTable:
         self.push_item(key, value)
         return
 
+    def push(self, key, value):
+        self.push_item(key, value)
+        return
+
+    #-------------------
+    #   find_item
+    #-------------------
+
     def __getitem__(self, key):
         return self.find_item(key)
 
     def get(self, key):
         return self.find_item(key)
+
+    def find(self, key):
+        return self.find_item(key)
+
+    #-------------------
+    #   pop_item
+    #-------------------
 
     def __delitem__(self, key):
         self.pop_item(key)
@@ -286,6 +305,9 @@ class HashTable:
     def delete(self, key):
         self.pop_item(key)
         return
+
+    def pop(self, key):
+        return self.pop_item(key)
 
 
 ############################################################

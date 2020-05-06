@@ -337,14 +337,20 @@ class HashTable:
             if node is not None:
                 node.value = (key, value)
 
-            # else, append `(key, value)` to the chain
+            # else, insert it
             else:
+
                 self.__item_count += 1
                 chain.push_to_tail((key, value))
 
         # else, create a new chain
         else:
+            self.__item_count += 1
             self.__array[index] = DoublyLinkedList(value=(key, value))
+
+        # maybe resize
+        if should_resize:
+            self.resize()
 
         # print(f"array[{repr(index)}] := {repr(value)}")
         return self.__item_count
@@ -394,16 +400,21 @@ class HashTable:
 
             # if it exists, remove it
             if node is not None:
+
                 self.__item_count -= 1
                 (__, value) = chain.pop_node(node)
+
+                # if the chain is now empty, remove it
+                if len(chain) == 0:
+                    self.__array[index] = None
 
             # else, do nothing
 
         # else, do nothing
 
-        # if the chain is now empty, remove it
-        if len(chain) == 0:
-            self.__array[index] = None
+        # maybe resize
+        if should_resize:
+            self.resize()
 
         # print(f"array[{repr(index)}] := {repr(value)}")
         return (value, self.__item_count)

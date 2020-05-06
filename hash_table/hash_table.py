@@ -309,7 +309,7 @@ class HashTable:
         for chain in from_array:
             if chain is not None:
                 for ((key, value), node) in chain:
-                    self.push_item(key, value)
+                    self.push_item(key, value, should_resize=False)
 
         return
 
@@ -317,7 +317,7 @@ class HashTable:
     #   item access
     ########################################
 
-    def push_item(self, key, value):
+    def push_item(self, key, value, should_resize=True):
         """
         Set the value stored with the given key.
 
@@ -376,7 +376,7 @@ class HashTable:
         # print(f"array[{repr(index)}] => {repr(value)}")
         return value
 
-    def pop_item(self, key):
+    def pop_item(self, key, should_resize=True):
         """
         Remove the value stored with the given key.
         """

@@ -42,8 +42,8 @@ class HashTable:
     ):
 
         self.__bucket_count = bucket_count
-        self.__min_bucket_count = min_bucket_count
-        self.__max_bucket_count = max_bucket_count
+        self.__min_bucket_count = int_min(bucket_count, min_bucket_count)
+        self.__max_bucket_count = int_max(bucket_count, max_bucket_count)
 
         self.__item_count = 0
         self.__array = [None] * bucket_count

@@ -21,6 +21,8 @@ class HashTable:
     DEFAULT_RESIZE_FACTOR = 2
     DEFAULT_RESIZE_UP_FACTOR = DEFAULT_RESIZE_FACTOR
     DEFAULT_RESIZE_DOWN_FACTOR = DEFAULT_RESIZE_FACTOR
+    DEFAULT_LOAD_BEFORE_RESIZE_UP = 3 / 4
+    DEFAULT_LOAD_BEFORE_RESIZE_DOWN = 1 / 4
     DEFAULT_DEFAULT_VALUE = None
     DEFAULT_HASHER = "fnv1a"
 
@@ -32,6 +34,8 @@ class HashTable:
         resize_factor=DEFAULT_RESIZE_FACTOR,
         resize_up_factor=DEFAULT_RESIZE_UP_FACTOR,
         resize_down_factor=DEFAULT_RESIZE_DOWN_FACTOR,
+        load_before_resize_up=DEFAULT_LOAD_BEFORE_RESIZE_UP,
+        load_before_resize_down=DEFAULT_LOAD_BEFORE_RESIZE_DOWN,
         default_value=DEFAULT_DEFAULT_VALUE,
         hasher=DEFAULT_HASHER,
     ):

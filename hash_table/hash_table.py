@@ -319,9 +319,9 @@ class HashTable:
 
     def push_item(self, key, value, should_resize=True):
         """
-        Set the value stored with the given key.
-
-        Hash collisions should be handled with Linked List Chaining.
+        Set `key`'s value to `value` in the hash table.
+        Hash collisions are handled with linked list chaining.
+        Returns the hash table's new item count.
         """
 
         index = self.hash_index(key)
@@ -339,6 +339,7 @@ class HashTable:
 
             # else, append `(key, value)` to the chain
             else:
+                self.__item_count += 1
                 chain.push_to_tail((key, value))
 
         # else, create a new chain
@@ -346,13 +347,12 @@ class HashTable:
             self.__array[index] = DoublyLinkedList(value=(key, value))
 
         # print(f"array[{repr(index)}] := {repr(value)}")
-        return
+        return self.__item_count
 
     def find_item(self, key):
         """
-        Get the value stored with the given key.
-
-        Returns `default_value` if the key is not found.
+        Get `key`'s value in the hash table.
+        Returns the key's value or `default_value` if the key is not found.
         """
 
         index = self.hash_index(key)
@@ -378,7 +378,8 @@ class HashTable:
 
     def pop_item(self, key, should_resize=True):
         """
-        Remove the value stored with the given key.
+        Remove `key`'s value in the hash table.
+        Returns the removed value and the hash table's new item count.
         """
 
         index = self.hash_index(key)
@@ -393,6 +394,7 @@ class HashTable:
 
             # if it exists, remove it
             if node is not None:
+                self.__item_count -= 1
                 (__, value) = chain.pop_node(node)
 
             # else, do nothing
@@ -404,7 +406,7 @@ class HashTable:
             self.__array[index] = None
 
         # print(f"array[{repr(index)}] := {repr(value)}")
-        return value
+        return (value, self.__item_count)
 
     ####################
     #   other names

@@ -254,13 +254,13 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
-        if self.load_factor >= self.load_before_resize_up:
+        if self.load_factor >= self.__load_before_resize_up:
             return self.resize_up()
 
-        if self.load_factor <= self.load_before_resize_down:
+        if self.load_factor <= self.__load_before_resize_down:
             return self.resize_down()
 
-        return self.bucket_count
+        return self.__bucket_count
 
     def resize_up(self):
         """
@@ -269,7 +269,7 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
-        return self.bucket_count
+        return self.__bucket_count
 
     def resize_down(self):
         """
@@ -278,7 +278,7 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
-        return self.bucket_count
+        return self.__bucket_count
 
     ########################################
     #   item access

@@ -16,6 +16,8 @@ class HashTable:
     Implement this.
     """
 
+    DEBUG = True
+
     DEFAULT_BUCKET_COUNT = 128
     DEFAULT_MIN_BUCKET_COUNT = 8
     DEFAULT_MAX_BUCKET_COUNT = None
@@ -216,6 +218,7 @@ class HashTable:
         """
         The load factor of the hash table.
         """
+
         return (self.__item_count / self.__bucket_count)
 
     @property
@@ -247,13 +250,51 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
+        new_bucket_count = self.__bucket_count
+
+        if self.DEBUG:
+            print(
+                f"resize()",
+                f"... load_factor = {self.load_factor}",
+            )
+
         if self.load_factor >= self.__load_before_resize_up:
-            return self.resize_up()
 
-        if self.load_factor <= self.__load_before_resize_down:
-            return self.resize_down()
+            if self.DEBUG:
+                print(
+                    f"resize()",
+                    f"... resizing up",
+                )
 
-        return self.__bucket_count
+            new_bucket_count = self.resize_up()
+
+        elif self.load_factor <= self.__load_before_resize_down:
+
+            if self.DEBUG:
+                print(
+                    f"resize()",
+                    f"... resizing down",
+                )
+
+            new_bucket_count = self.resize_down()
+
+        else:
+
+            if self.DEBUG:
+                print(
+                    f"resize()",
+                    f"... not resizing",
+                )
+
+            pass
+
+        if self.DEBUG:
+            print(
+                f"resize()",
+                f"... new_bucket_count = {new_bucket_count}",
+            )
+
+        return new_bucket_count
 
     def resize_up(self):
         """
@@ -267,6 +308,12 @@ class HashTable:
 
         if new_bucket_count > old_bucket_count:
 
+            if self.DEBUG:
+                print(
+                    f"resize_up()",
+                    f"... resizing",
+                )
+
             old_array = self.__array
 
             self.__bucket_count = new_bucket_count
@@ -275,6 +322,15 @@ class HashTable:
             self.rehash_from_array(old_array)
 
         # else, no need to rehash
+        else:
+
+            if self.DEBUG:
+                print(
+                    f"resize_up()",
+                    f"... not resizing",
+                )
+
+            pass
 
         return new_bucket_count    # ... == old_bucket_count if resize skipped
 
@@ -290,6 +346,12 @@ class HashTable:
 
         if new_bucket_count < old_bucket_count:
 
+            if self.DEBUG:
+                print(
+                    f"resize_down()",
+                    f"... resizing",
+                )
+
             old_array = self.__array
 
             self.__bucket_count = new_bucket_count
@@ -298,6 +360,15 @@ class HashTable:
             self.rehash_from_array(old_array)
 
         # else, no need to rehash
+        else:
+
+            if self.DEBUG:
+                print(
+                    f"resize_down()",
+                    f"... not resizing",
+                )
+
+            pass
 
         return new_bucket_count    # ... == old_bucket_count if resize skipped
 
@@ -324,27 +395,59 @@ class HashTable:
         Returns the hash table's new item count.
         """
 
+        if self.DEBUG:
+            print(f"push_item({repr(key)}, {repr(value)})")
+
         index = self.hash_index(key)
         chain = self.__array[index]
 
         # if there's a chain at `index`, then...
         if chain is not None:
 
+            if self.DEBUG:
+                print(
+                    f"push_item(...)",
+                    f"... there is a chain",
+                )
+
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
 
             # if found, update `value`
             if node is not None:
+
+                if self.DEBUG:
+                    print(
+                        f"push_item(...)",
+                        f"... key found",
+                        f"... updating value",
+                    )
+
                 node.value = (key, value)
 
             # else, insert it
             else:
+
+                if self.DEBUG:
+                    print(
+                        f"push_item(...)"
+                        f"... key not found"
+                        f"... inserting (key, value)"
+                    )
 
                 self.__item_count += 1
                 chain.push_to_tail((key, value))
 
         # else, create a new chain
         else:
+
+            if self.DEBUG:
+                print(
+                    f"push_item(...)"
+                    f"... there is no chain"
+                    f"... inserting new chain with (key, value)"
+                )
+
             self.__item_count += 1
             self.__array[index] = DoublyLinkedList(value=(key, value))
 
@@ -361,6 +464,9 @@ class HashTable:
         Returns the key's value or `default_value` if the key is not found.
         """
 
+        if self.DEBUG:
+            print(f"find_item({repr(key)})")
+
         index = self.hash_index(key)
         chain = self.__array[index]
         value = self.__default_value
@@ -368,14 +474,50 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
+            if self.DEBUG:
+                print(
+                    f"push_item(...)",
+                    f"... there is a chain",
+                )
+
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
 
             # if found, return its `value`
             if node is not None:
+
+                if self.DEBUG:
+                    print(
+                        f"push_item(...)",
+                        f"... key found",
+                        f"... getting value",
+                    )
+
                 (__, value) = node.value
 
             # else, return the default value (which we're already doing)
+            else:
+
+                if self.DEBUG:
+                    print(
+                        f"find_item(...)",
+                        f"... key not found",
+                        f"... passing",
+                    )
+
+                pass
+
+        # else, do nothing
+        else:
+
+            if self.DEBUG:
+                print(
+                    f"find_item(...)",
+                    f"... there is no chain",
+                    f"... passing",
+                )
+
+            pass
 
         # else, there's nothing to do
 
@@ -388,6 +530,9 @@ class HashTable:
         Returns the removed value and the hash table's new item count.
         """
 
+        if self.DEBUG:
+            print(f"pop_item({repr(key)})")
+
         index = self.hash_index(key)
         chain = self.__array[index]
         value = None
@@ -395,22 +540,63 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
+            if self.DEBUG:
+                print(
+                    f"pop_item(...)",
+                    f"... there is a chain",
+                )
+
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
 
             # if it exists, remove it
             if node is not None:
 
+                if self.DEBUG:
+                    print(
+                        f"pop_item(...)",
+                        f"... key found",
+                        f"... deleting (key, value)",
+                    )
+
                 self.__item_count -= 1
                 (__, value) = chain.pop_node(node)
 
                 # if the chain is now empty, remove it
                 if len(chain) == 0:
+
+                    if self.DEBUG:
+                        print(
+                            f"pop_item(...)",
+                            f"... chain is empty",
+                            f"... deleting",
+                        )
+
                     self.__array[index] = None
 
             # else, do nothing
+            else:
+
+                if self.DEBUG:
+                    print(
+                        f"pop_item(...)",
+                        f"... key not found",
+                        f"... passing",
+                    )
+
+                pass
 
         # else, do nothing
+        else:
+
+            if self.DEBUG:
+                print(
+                    f"pop_item(...)",
+                    f"... there is no chain",
+                    f"... passing",
+                )
+
+            pass
 
         # maybe resize
         if should_resize:

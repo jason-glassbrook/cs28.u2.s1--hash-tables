@@ -166,6 +166,19 @@ class HashTable:
     #   table mutation
     ########################################
 
+    def resize(self):
+        """
+        Doubles the `bucket_count` of the hash table and
+        rehash all key/value pairs.
+
+        Implement this.
+        """
+        pass
+
+    ########################################
+    #   item access
+    ########################################
+
     def push_item(self, key, value):
         """
         Set the value stored with the given key.
@@ -254,15 +267,6 @@ class HashTable:
 
         # print(f"array[{repr(index)}] := {repr(value)}")
         return value
-
-    def resize(self):
-        """
-        Doubles the `bucket_count` of the hash table and
-        rehash all key/value pairs.
-
-        Implement this.
-        """
-        pass
 
     ####################
     #   other names

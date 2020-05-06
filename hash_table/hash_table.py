@@ -44,6 +44,12 @@ class HashTable:
         self.__min_bucket_count = min_bucket_count
         self.__max_bucket_count = max_bucket_count
 
+        self.__resize_factor = resize_factor
+        self.__resize_up_factor = resize_up_factor
+        self.__resize_down_factor = resize_down_factor
+        self.__load_before_resize_up = load_before_resize_up
+        self.__load_before_resize_down = load_before_resize_down
+
         self.__default_value = default_value
 
         if hasher not in HashTable.hashers:

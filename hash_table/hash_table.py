@@ -15,13 +15,19 @@ class HashTable:
     Implement this.
     """
 
+    DEFAULT_BUCKET_COUNT = 128
+    DEFAULT_MIN_BUCKET_COUNT = None
+    DEFAULT_MAX_BUCKET_COUNT = None
+    DEFAULT_DEFAULT_VALUE = None
+    DEFAULT_HASHER = "fnv1a"
+
     def __init__(
         self,
-        bucket_count=128,
-        min_bucket_count=None,
-        max_bucket_count=None,
-        default_value=None,
-        hasher="fnv1a",
+        bucket_count=DEFAULT_BUCKET_COUNT,
+        min_bucket_count=DEFAULT_MIN_BUCKET_COUNT,
+        max_bucket_count=DEFAULT_MAX_BUCKET_COUNT,
+        default_value=DEFAULT_DEFAULT_VALUE,
+        hasher=DEFAULT_HASHER,
     ):
 
         self.__bucket_count = bucket_count

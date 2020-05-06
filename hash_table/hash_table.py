@@ -105,6 +105,10 @@ class HashTable:
     def default_value(self):
         return self.__default_value
 
+    @property
+    def hash(self):
+        return self.__hash
+
     ########################################
     #   hashing functions
     ########################################

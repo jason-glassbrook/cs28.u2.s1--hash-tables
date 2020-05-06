@@ -18,6 +18,9 @@ class HashTable:
     DEFAULT_BUCKET_COUNT = 128
     DEFAULT_MIN_BUCKET_COUNT = None
     DEFAULT_MAX_BUCKET_COUNT = None
+    DEFAULT_RESIZE_FACTOR = 2
+    DEFAULT_RESIZE_UP_FACTOR = DEFAULT_RESIZE_FACTOR
+    DEFAULT_RESIZE_DOWN_FACTOR = DEFAULT_RESIZE_FACTOR
     DEFAULT_DEFAULT_VALUE = None
     DEFAULT_HASHER = "fnv1a"
 
@@ -26,6 +29,9 @@ class HashTable:
         bucket_count=DEFAULT_BUCKET_COUNT,
         min_bucket_count=DEFAULT_MIN_BUCKET_COUNT,
         max_bucket_count=DEFAULT_MAX_BUCKET_COUNT,
+        resize_factor=DEFAULT_RESIZE_FACTOR,
+        resize_up_factor=DEFAULT_RESIZE_UP_FACTOR,
+        resize_down_factor=DEFAULT_RESIZE_DOWN_FACTOR,
         default_value=DEFAULT_DEFAULT_VALUE,
         hasher=DEFAULT_HASHER,
     ):

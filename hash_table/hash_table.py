@@ -269,7 +269,21 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
-        return self.__bucket_count
+        old_bucket_count = self.__bucket_count
+        new_bucket_count = self.bucket_count_after_resize_up
+
+        if new_bucket_count > old_bucket_count:
+
+            old_array = self.__array
+
+            self.__bucket_count = new_bucket_count
+            self.__array = [None] * new_bucket_count
+
+            self.rehash_from_array(old_array)
+
+        # else, no need to rehash
+
+        return new_bucket_count    # ... == old_bucket_count if resize skipped
 
     def resize_down(self):
         """
@@ -278,7 +292,21 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
-        return self.__bucket_count
+        old_bucket_count = self.__bucket_count
+        new_bucket_count = self.bucket_count_after_resize_down
+
+        if new_bucket_count < old_bucket_count:
+
+            old_array = self.__array
+
+            self.__bucket_count = new_bucket_count
+            self.__array = [None] * new_bucket_count
+
+            self.rehash_from_array(old_array)
+
+        # else, no need to rehash
+
+        return new_bucket_count    # ... == old_bucket_count if resize skipped
 
     ########################################
     #   item access

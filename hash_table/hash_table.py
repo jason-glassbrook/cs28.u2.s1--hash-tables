@@ -255,6 +255,23 @@ class HashTable:
 
         return self.bucket_count
 
+    def resize_up(self):
+        """
+        Up-size the hash-table's internal array.
+        Rehash all key-value pairs.
+        Returns the final `bucket_count`.
+        """
+
+        return self.bucket_count
+
+    def resize_down(self):
+        """
+        Down-size the hash-table's internal array.
+        Rehash all key-value pairs.
+        Returns the final `bucket_count`.
+        """
+
+        return self.bucket_count
 
     ########################################
     #   item access

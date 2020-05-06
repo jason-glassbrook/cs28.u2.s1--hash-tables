@@ -432,16 +432,13 @@ class HashTable:
         return
 
     def set(self, key, value):
-        self.push_item(key, value)
-        return
+        return self.push_item(key, value)
 
     def put(self, key, value):
-        self.push_item(key, value)
-        return
+        return self.push_item(key, value)
 
     def push(self, key, value):
-        self.push_item(key, value)
-        return
+        return self.push_item(key, value)
 
     #-------------------
     #   find_item

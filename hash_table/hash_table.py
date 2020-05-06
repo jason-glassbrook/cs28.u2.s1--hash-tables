@@ -143,7 +143,7 @@ class HashTable:
     #   table mutation
     ########################################
 
-    def __setitem__(self, key, value):
+    def push_item(self, key, value):
         """
         Set the value stored with the given key.
 
@@ -174,7 +174,7 @@ class HashTable:
         # print(f"array[{repr(index)}] := {repr(value)}")
         return
 
-    def __getitem__(self, key):
+    def find_item(self, key):
         """
         Get the value stored with the given key.
 
@@ -202,13 +202,14 @@ class HashTable:
         # print(f"array[{repr(index)}] => {repr(value)}")
         return value
 
-    def __delitem__(self, key):
+    def pop_item(self, key):
         """
         Remove the value stored with the given key.
         """
 
         index = self.hash_index(key)
         chain = self.__array[index]
+        value = None
 
         # if there's a chain at `index`, then...
         if chain is not None:
@@ -218,7 +219,7 @@ class HashTable:
 
             # if it exists, remove it
             if node is not None:
-                chain.pop_node(node)
+                (__, value) = chain.pop_node(node)
 
             # else, do nothing
 
@@ -229,7 +230,7 @@ class HashTable:
             self.__array[index] = None
 
         # print(f"array[{repr(index)}] := {repr(value)}")
-        return
+        return value
 
     def resize(self):
         """
@@ -244,19 +245,30 @@ class HashTable:
     #   other names
     ####################
 
+    def __setitem__(self, key, value):
+        self.push_item(key, value)
+        return
+
     def set(self, key, value):
-        self[key] = value
+        self.push_item(key, value)
         return
 
     def put(self, key, value):
-        self[key] = value
+        self.push_item(key, value)
         return
 
+    def __getitem__(self, key):
+        return self.find_item(key)
+
     def get(self, key):
-        return self[key]
+        return self.find_item(key)
+
+    def __delitem__(self, key):
+        self.pop_item(key)
+        return
 
     def delete(self, key):
-        del self[key]
+        self.pop_item(key)
         return
 
 

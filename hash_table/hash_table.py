@@ -1,6 +1,7 @@
 ############################################################
 
 from doubly_linked_list import DoublyLinkedList
+from math_tools import int_min, int_max
 
 ############################################################
 #   hash table
@@ -216,6 +217,28 @@ class HashTable:
         The load factor of the hash table.
         """
         return (self.__item_count / self.__bucket_count)
+
+    @property
+    def bucket_count_after_resize_up(self):
+        """
+        The new `bucket_count` when up-sizing the hash table's internal array.
+        """
+
+        return int_min(
+            self.__max_bucket_count,
+            self.__bucket_count * self.__resize_up_factor,
+        )
+
+    @property
+    def bucket_count_after_resize_down(self):
+        """
+        The new `bucket_count` when down-sizing the hash table's internal array.
+        """
+
+        return int_max(
+            self.__min_bucket_count,
+            self.__bucket_count / self.__resize_down_factor,
+        )
 
     def resize(self):
         """

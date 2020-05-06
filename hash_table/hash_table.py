@@ -210,6 +210,13 @@ class HashTable:
     #   table mutation
     ########################################
 
+    @property
+    def load_factor(self):
+        """
+        The load factor of the hash table.
+        """
+        return (self.__item_count / self.__bucket_count)
+
     def resize(self):
         """
         Changes the `bucket_count` of the hash table and rehash all key/value pairs.

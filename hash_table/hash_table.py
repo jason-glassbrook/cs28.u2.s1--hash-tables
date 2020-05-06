@@ -57,6 +57,7 @@ class HashTable:
         else:
             self.__hash = getattr(self, f"{hasher}_hash")
 
+        self.__item_count = 0
         self.__array = [None] * bucket_count
 
         return

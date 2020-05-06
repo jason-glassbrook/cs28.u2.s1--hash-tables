@@ -169,7 +169,7 @@ class TestHashTable(unittest.TestCase):
 
         ht.resize()
 
-        self.assertTrue(len(ht) == 16)
+        self.assertTrue(ht.bucket_count == 16)
 
         return_value = ht.get("key-0")
         self.assertTrue(return_value == "val-0")

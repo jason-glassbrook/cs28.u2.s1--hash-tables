@@ -44,6 +44,9 @@ class HashTable:
         self.__min_bucket_count = min_bucket_count
         self.__max_bucket_count = max_bucket_count
 
+        self.__item_count = 0
+        self.__array = [None] * bucket_count
+
         self.__resize_factor = resize_factor
         self.__resize_up_factor = resize_up_factor
         self.__resize_down_factor = resize_down_factor
@@ -57,24 +60,50 @@ class HashTable:
         else:
             self.__hash = getattr(self, f"{hasher}_hash")
 
-        self.__item_count = 0
-        self.__array = [None] * bucket_count
-
         return
 
     def __len__(self):
-
         return self.item_count
 
     @property
     def item_count(self):
-
         return self.__item_count
 
     @property
     def bucket_count(self):
-
         return self.__bucket_count
+
+    @property
+    def min_bucket_count(self):
+        return self.__min_bucket_count
+
+    @property
+    def max_bucket_count(self):
+        return self.__max_bucket_count
+
+    @property
+    def resize_factor(self):
+        return self.__resize_factor
+
+    @property
+    def resize_up_factor(self):
+        return self.__resize_up_factor
+
+    @property
+    def resize_down_factor(self):
+        return self.__resize_down_factor
+
+    @property
+    def load_before_resize_up(self):
+        return self.__load_before_resize_up
+
+    @property
+    def load_before_resize_down(self):
+        return self.__load_before_resize_down
+
+    @property
+    def default_value(self):
+        return self.__default_value
 
     ########################################
     #   hashing functions

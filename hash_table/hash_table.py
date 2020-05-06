@@ -240,13 +240,6 @@ class HashTable:
             self.__bucket_count / self.__resize_down_factor,
         )
 
-    def rehash_from_array(self, from_array):
-        """
-        Rehash the items in `from_array` to the hash table's internal array.
-        """
-
-        return
-
     def resize(self):
         """
         Resize the hash table's internal array based on the current load factor.
@@ -307,6 +300,13 @@ class HashTable:
         # else, no need to rehash
 
         return new_bucket_count    # ... == old_bucket_count if resize skipped
+
+    def rehash_from_array(self, from_array):
+        """
+        Rehash the items in `from_array` to the hash table's internal array.
+        """
+
+        return
 
     ########################################
     #   item access

@@ -152,6 +152,7 @@ class HashTable:
         for ((k, v), n) in chain:
             if k == key:
                 node = n
+                break
 
         return node
 

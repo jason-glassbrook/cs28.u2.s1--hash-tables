@@ -1,6 +1,6 @@
 ############################################################
 
-from iter_tools import is_iterable
+from tools.iter_tools import is_iterable
 
 ############################################################
 #   DOUBLY LINKED LIST (DLL)

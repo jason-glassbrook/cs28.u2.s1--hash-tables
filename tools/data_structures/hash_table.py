@@ -1,7 +1,7 @@
 ############################################################
 
-from doubly_linked_list import DoublyLinkedList
-from math_tools import int_min, int_max
+from tools.math_tools import int_min, int_max
+from tools.data_structures.doubly_linked_list import DoublyLinkedList
 
 ############################################################
 #   hash table

@@ -46,19 +46,19 @@ class HashTable:
         self.debug = debug
 
         self.__bucket_count = bucket_count
-        self.__min_bucket_count = int_min(bucket_count, min_bucket_count)
-        self.__max_bucket_count = int_max(bucket_count, max_bucket_count)
+        self.min_bucket_count = int_min(bucket_count, min_bucket_count)
+        self.max_bucket_count = int_max(bucket_count, max_bucket_count)
 
         self.__item_count = 0
         self.__array = [None] * bucket_count
 
-        self.__resize_factor = resize_factor
-        self.__resize_up_factor = resize_up_factor
-        self.__resize_down_factor = resize_down_factor
-        self.__load_before_resize_up = load_before_resize_up
-        self.__load_before_resize_down = load_before_resize_down
+        self.resize_factor = resize_factor
+        self.resize_up_factor = resize_up_factor
+        self.resize_down_factor = resize_down_factor
+        self.load_before_resize_up = load_before_resize_up
+        self.load_before_resize_down = load_before_resize_down
 
-        self.__default_value = default_value
+        self.default_value = default_value
 
         if hasher not in HashTable.hashers:
             raise Exception("UnknownHasherError")
@@ -117,6 +117,15 @@ class HashTable:
     def min_bucket_count(self):
         return self.__min_bucket_count
 
+    @min_bucket_count.setter
+    def min_bucket_count(self, value):
+        self.__min_bucket_count = value
+        return
+
+    @min_bucket_count.deleter
+    def min_bucket_count(self):
+        setattr(self, "min_bucket_count", self.DEFAULT_MIN_BUCKET_COUNT)
+        return
 
     #-----------------------------------------------------------
 
@@ -124,6 +133,15 @@ class HashTable:
     def max_bucket_count(self):
         return self.__max_bucket_count
 
+    @max_bucket_count.setter
+    def max_bucket_count(self, value):
+        self.__max_bucket_count = value
+        return
+
+    @max_bucket_count.deleter
+    def max_bucket_count(self):
+        setattr(self, "max_bucket_count", self.DEFAULT_MAX_BUCKET_COUNT)
+        return
 
     #-----------------------------------------------------------
 
@@ -131,6 +149,19 @@ class HashTable:
     def resize_factor(self):
         return self.__resize_factor
 
+    @resize_factor.setter
+    def resize_factor(self, value):
+        self.__resize_factor = value
+        setattr(self, "resize_up_factor", value)
+        setattr(self, "resize_down_factor", value)
+        return
+
+    @resize_factor.deleter
+    def resize_factor(self):
+        setattr(self, "resize_factor", self.DEFAULT_RESIZE_FACTOR)
+        delattr(self, "resize_up_factor")
+        delattr(self, "resize_down_factor")
+        return
 
     #-----------------------------------------------------------
 
@@ -138,6 +169,15 @@ class HashTable:
     def resize_up_factor(self):
         return self.__resize_up_factor
 
+    @resize_up_factor.setter
+    def resize_up_factor(self, value):
+        self.__resize_up_factor = value
+        return
+
+    @resize_up_factor.deleter
+    def resize_up_factor(self):
+        setattr(self, "resize_up_factor", self.DEFAULT_RESIZE_UP_FACTOR)
+        return
 
     #-----------------------------------------------------------
 
@@ -145,6 +185,15 @@ class HashTable:
     def resize_down_factor(self):
         return self.__resize_down_factor
 
+    @resize_down_factor.setter
+    def resize_down_factor(self, value):
+        self.__resize_down_factor = value
+        return
+
+    @resize_down_factor.deleter
+    def resize_down_factor(self):
+        setattr(self, "resize_down_factor", self.DEFAULT_RESIZE_DOWN_FACTOR)
+        return
 
     #-----------------------------------------------------------
 
@@ -152,6 +201,15 @@ class HashTable:
     def load_before_resize_up(self):
         return self.__load_before_resize_up
 
+    @load_before_resize_up.setter
+    def load_before_resize_up(self, value):
+        self.__load_before_resize_up = value
+        return
+
+    @load_before_resize_up.deleter
+    def load_before_resize_up(self):
+        setattr(self, "load_before_resize_up", self.DEFAULT_LOAD_BEFORE_RESIZE_UP)
+        return
 
     #-----------------------------------------------------------
 
@@ -159,6 +217,15 @@ class HashTable:
     def load_before_resize_down(self):
         return self.__load_before_resize_down
 
+    @load_before_resize_down.setter
+    def load_before_resize_down(self, value):
+        self.__load_before_resize_down = value
+        return
+
+    @load_before_resize_down.deleter
+    def load_before_resize_down(self):
+        setattr(self, "load_before_resize_down", self.DEFAULT_LOAD_BEFORE_RESIZE_DOWN)
+        return
 
     #-----------------------------------------------------------
 
@@ -166,6 +233,15 @@ class HashTable:
     def default_value(self):
         return self.__default_value
 
+    @default_value.setter
+    def default_value(self, value):
+        self.__default_value = value
+        return
+
+    @default_value.deleter
+    def default_value(self):
+        setattr(self, "default_value", self.DEFAULT_DEFAULT_VALUE)
+        return
 
     #-----------------------------------------------------------
 
@@ -702,7 +778,7 @@ class HashTable:
 
 if __name__ == "__main__":
 
-    ht = HashTable(bucket_count=2)
+    ht = HashTable(bucket_count=2, debug=True)
 
     ht.put("line_1", "Tiny hash table!")
     ht.put("line_2", "Filled beyond capacity!")
@@ -716,9 +792,9 @@ if __name__ == "__main__":
     print(ht.get("line_3"))
 
     # Test resizing
-    old_bucket_count = len(ht)
+    old_bucket_count = ht.bucket_count
     ht.resize()
-    new_bucket_count = len(ht)
+    new_bucket_count = ht.bucket_count
 
     print(f"\nResized from {old_bucket_count} to {new_bucket_count}.\n")
 

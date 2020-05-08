@@ -312,47 +312,37 @@ class HashTable:
         """
 
         def debug_print(*messages):
-            self.debug_print(*messages, local_debug=local_debug)
+            self.debug_print(
+                f"resize()",
+                *messages,
+                local_debug=local_debug,
+            )
             return
 
-        debug_print(
-            f"resize()",
-            f"... load_factor = {self.load_factor}",
-        )
+        debug_print()
+        debug_print(f"... load_factor = {self.load_factor}",)
 
         new_bucket_count = self.__bucket_count
 
         if self.load_factor >= self.__load_before_resize_up:
 
-            debug_print(
-                f"resize()",
-                f"... resizing up",
-            )
+            debug_print(f"... resizing up",)
 
             new_bucket_count = self.resize_up()
 
         elif self.load_factor <= self.__load_before_resize_down:
 
-            debug_print(
-                f"resize()",
-                f"... resizing down",
-            )
+            debug_print(f"... resizing down",)
 
             new_bucket_count = self.resize_down()
 
         else:
 
-            debug_print(
-                f"resize()",
-                f"... not resizing",
-            )
+            debug_print(f"... not resizing",)
 
             pass
 
-        debug_print(
-            f"resize()",
-            f"... new_bucket_count = {new_bucket_count}",
-        )
+        debug_print(f"... new_bucket_count = {new_bucket_count}",)
 
         return new_bucket_count
 
@@ -364,18 +354,21 @@ class HashTable:
         """
 
         def debug_print(*messages):
-            self.debug_print(*messages, local_debug=local_debug)
+            self.debug_print(
+                f"resize_up()",
+                *messages,
+                local_debug=local_debug,
+            )
             return
+
+        debug_print()
 
         old_bucket_count = self.__bucket_count
         new_bucket_count = self.bucket_count_after_resize_up
 
         if new_bucket_count > old_bucket_count:
 
-            debug_print(
-                f"resize_up()",
-                f"... resizing",
-            )
+            debug_print(f"... resizing",)
 
             old_array = self.__array
 
@@ -387,10 +380,7 @@ class HashTable:
         # else, no need to rehash
         else:
 
-            debug_print(
-                f"resize_up()",
-                f"... not resizing",
-            )
+            debug_print(f"... not resizing",)
 
             pass
 
@@ -404,18 +394,21 @@ class HashTable:
         """
 
         def debug_print(*messages):
-            self.debug_print(*messages, local_debug=local_debug)
+            self.debug_print(
+                f"resize_down()",
+                *messages,
+                local_debug=local_debug,
+            )
             return
+
+        debug_print()
 
         old_bucket_count = self.__bucket_count
         new_bucket_count = self.bucket_count_after_resize_down
 
         if new_bucket_count < old_bucket_count:
 
-            debug_print(
-                f"resize_down()",
-                f"... resizing",
-            )
+            debug_print(f"... resizing",)
 
             old_array = self.__array
 
@@ -427,10 +420,7 @@ class HashTable:
         # else, no need to rehash
         else:
 
-            debug_print(
-                f"resize_down()",
-                f"... not resizing",
-            )
+            debug_print(f"... not resizing",)
 
             pass
 
@@ -460,10 +450,14 @@ class HashTable:
         """
 
         def debug_print(*messages):
-            self.debug_print(*messages, local_debug=local_debug)
+            self.debug_print(
+                f"push_item({repr(key)}, {repr(value)})",
+                *messages,
+                local_debug=local_debug,
+            )
             return
 
-        debug_print(f"push_item({repr(key)}, {repr(value)})",)
+        debug_print()
 
         index = self.hash_index(key)
         chain = self.__array[index]
@@ -471,10 +465,7 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
-            debug_print(
-                f"push_item(...)",
-                f"... there is a chain",
-            )
+            debug_print(f"... there is a chain",)
 
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
@@ -483,7 +474,6 @@ class HashTable:
             if node is not None:
 
                 debug_print(
-                    f"push_item(...)",
                     f"... key found",
                     f"... updating value",
                 )
@@ -494,7 +484,6 @@ class HashTable:
             else:
 
                 debug_print(
-                    f"push_item(...)",
                     f"... key not found",
                     f"... inserting (key, value)",
                 )
@@ -506,7 +495,6 @@ class HashTable:
         else:
 
             debug_print(
-                f"push_item(...)",
                 f"... there is no chain",
                 f"... inserting new chain with (key, value)",
             )
@@ -528,10 +516,14 @@ class HashTable:
         """
 
         def debug_print(*messages):
-            self.debug_print(*messages, local_debug=local_debug)
+            self.debug_print(
+                f"find_item({repr(key)})",
+                *messages,
+                local_debug=local_debug,
+            )
             return
 
-        debug_print(f"find_item({repr(key)})",)
+        debug_print()
 
         index = self.hash_index(key)
         chain = self.__array[index]
@@ -540,10 +532,7 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
-            debug_print(
-                f"push_item(...)",
-                f"... there is a chain",
-            )
+            debug_print(f"... there is a chain",)
 
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
@@ -552,7 +541,6 @@ class HashTable:
             if node is not None:
 
                 debug_print(
-                    f"push_item(...)",
                     f"... key found",
                     f"... getting value",
                 )
@@ -563,7 +551,6 @@ class HashTable:
             else:
 
                 debug_print(
-                    f"find_item(...)",
                     f"... key not found",
                     f"... passing",
                 )
@@ -574,7 +561,6 @@ class HashTable:
         else:
 
             debug_print(
-                f"find_item(...)",
                 f"... there is no chain",
                 f"... passing",
             )
@@ -593,10 +579,14 @@ class HashTable:
         """
 
         def debug_print(*messages):
-            self.debug_print(*messages, local_debug=local_debug)
+            self.debug_print(
+                f"pop_item({repr(key)})",
+                *messages,
+                local_debug=local_debug,
+            )
             return
 
-        debug_print(f"pop_item({repr(key)})",)
+        debug_print()
 
         index = self.hash_index(key)
         chain = self.__array[index]
@@ -605,10 +595,7 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
-            debug_print(
-                f"pop_item(...)",
-                f"... there is a chain",
-            )
+            debug_print(f"... there is a chain",)
 
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
@@ -617,7 +604,6 @@ class HashTable:
             if node is not None:
 
                 debug_print(
-                    f"pop_item(...)",
                     f"... key found",
                     f"... deleting (key, value)",
                 )
@@ -629,7 +615,6 @@ class HashTable:
                 if len(chain) == 0:
 
                     debug_print(
-                        f"pop_item(...)",
                         f"... chain is empty",
                         f"... deleting",
                     )
@@ -640,7 +625,6 @@ class HashTable:
             else:
 
                 debug_print(
-                    f"pop_item(...)",
                     f"... key not found",
                     f"... passing",
                 )
@@ -651,7 +635,6 @@ class HashTable:
         else:
 
             debug_print(
-                f"pop_item(...)",
                 f"... there is no chain",
                 f"... passing",
             )

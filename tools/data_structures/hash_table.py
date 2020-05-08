@@ -525,6 +525,9 @@ class HashTable:
         Rehash the items in `from_array` to the hash table's internal array.
         """
 
+        # we need to reset the item count because `push_item` increments it!
+        self.__item_count = 0
+
         for chain in from_array:
             if chain is not None:
                 for ((key, value), node) in chain:

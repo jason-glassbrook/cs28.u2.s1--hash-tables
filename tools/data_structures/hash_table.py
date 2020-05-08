@@ -397,7 +397,10 @@ class HashTable:
 
         debug_print()
         debug_print(f"... load_factor = {self.load_factor}",)
+        debug_print(f"... load_before_resize_up = {self.load_before_resize_up}")
+        debug_print(f"... load_before_resize_down = {self.load_before_resize_down}")
 
+        old_bucket_count = self.__bucket_count
         new_bucket_count = self.__bucket_count
 
         if self.load_factor >= self.__load_before_resize_up:
@@ -418,7 +421,10 @@ class HashTable:
 
             pass
 
-        debug_print(f"... new_bucket_count = {new_bucket_count}",)
+        if new_bucket_count == old_bucket_count:
+            debug_print(f"... bucket_count = {self.bucket_count}",)
+        else:
+            debug_print(f"... new_bucket_count = {new_bucket_count}",)
 
         return new_bucket_count
 
@@ -429,22 +435,26 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
+        # yapf: disable
         def debug_print(*messages):
-            self.debug_print(
-                f"resize_up()",
-                *messages,
-                local_debug=local_debug,
-            )
+            self.debug_print(f"resize_up()", *messages, local_debug=local_debug)
             return
 
         debug_print()
+        debug_print(f"bucket_count = {self.bucket_count}",)
+        debug_print(f"max_bucket_count = {self.max_bucket_count}",)
+        debug_print(f"resize_up_factor = {self.resize_up_factor}",)
+        debug_print(f"bucket_count_after_resize_up = {self.bucket_count_after_resize_up}",)
+        # yapf: enable
 
         old_bucket_count = self.__bucket_count
         new_bucket_count = self.bucket_count_after_resize_up
 
         if new_bucket_count > old_bucket_count:
 
+            # yapf: disable
             debug_print(f"... resizing",)
+            # yapf: enable
 
             old_array = self.__array
 
@@ -456,7 +466,9 @@ class HashTable:
         # else, no need to rehash
         else:
 
+            # yapf: disable
             debug_print(f"... not resizing",)
+            # yapf: enable
 
             pass
 
@@ -469,22 +481,26 @@ class HashTable:
         Returns the final `bucket_count`.
         """
 
+        # yapf: disable
         def debug_print(*messages):
-            self.debug_print(
-                f"resize_down()",
-                *messages,
-                local_debug=local_debug,
-            )
+            self.debug_print(f"resize_down()", *messages, local_debug=local_debug)
             return
 
         debug_print()
+        debug_print(f"bucket_count = {self.bucket_count}",)
+        debug_print(f"min_bucket_count = {self.min_bucket_count}",)
+        debug_print(f"resize_down_factor = {self.resize_down_factor}",)
+        debug_print(f"bucket_count_after_resize_down = {self.bucket_count_after_resize_down}",)
+        # yapf: enable
 
         old_bucket_count = self.__bucket_count
         new_bucket_count = self.bucket_count_after_resize_down
 
         if new_bucket_count < old_bucket_count:
 
+            # yapf: disable
             debug_print(f"... resizing",)
+            # yapf: enable
 
             old_array = self.__array
 
@@ -496,7 +512,9 @@ class HashTable:
         # else, no need to rehash
         else:
 
+            # yapf: disable
             debug_print(f"... not resizing",)
+            # yapf: enable
 
             pass
 
@@ -525,15 +543,13 @@ class HashTable:
         Returns the hash table's new item count.
         """
 
+        # yapf: disable
         def debug_print(*messages):
-            self.debug_print(
-                f"push_item({repr(key)}, {repr(value)})",
-                *messages,
-                local_debug=local_debug,
-            )
+            self.debug_print(f"push_item({repr(key)}, {repr(value)})", *messages, local_debug=local_debug)
             return
 
         debug_print()
+        # yapf: enable
 
         index = self.hash_index(key)
         chain = self.__array[index]
@@ -541,7 +557,9 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
+            # yapf: disable
             debug_print(f"... there is a chain",)
+            # yapf: enable
 
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
@@ -549,20 +567,18 @@ class HashTable:
             # if found, update `value`
             if node is not None:
 
-                debug_print(
-                    f"... key found",
-                    f"... updating value",
-                )
+                # yapf: disable
+                debug_print(f"... key found", f"... updating value",)
+                # yapf: enable
 
                 node.value = (key, value)
 
             # else, insert it
             else:
 
-                debug_print(
-                    f"... key not found",
-                    f"... inserting (key, value)",
-                )
+                # yapf: disable
+                debug_print(f"... key not found", f"... inserting (key, value)",)
+                # yapf: enable
 
                 self.__item_count += 1
                 chain.push_to_tail((key, value))
@@ -570,10 +586,9 @@ class HashTable:
         # else, create a new chain
         else:
 
-            debug_print(
-                f"... there is no chain",
-                f"... inserting new chain with (key, value)",
-            )
+            # yapf: disable
+            debug_print(f"... there is no chain", f"... inserting new chain with (key, value)",)
+            # yapf: enable
 
             self.__item_count += 1
             self.__array[index] = DoublyLinkedList(value=(key, value))
@@ -591,15 +606,13 @@ class HashTable:
         Returns the key's value or `default_value` if the key is not found.
         """
 
+        # yapf: disable
         def debug_print(*messages):
-            self.debug_print(
-                f"find_item({repr(key)})",
-                *messages,
-                local_debug=local_debug,
-            )
+            self.debug_print(f"find_item({repr(key)})", *messages, local_debug=local_debug)
             return
 
         debug_print()
+        # yapf: enable
 
         index = self.hash_index(key)
         chain = self.__array[index]
@@ -608,7 +621,9 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
+            # yapf: disable
             debug_print(f"... there is a chain",)
+            # yapf: enable
 
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
@@ -616,30 +631,27 @@ class HashTable:
             # if found, return its `value`
             if node is not None:
 
-                debug_print(
-                    f"... key found",
-                    f"... getting value",
-                )
+                # yapf: disable
+                debug_print(f"... key found", f"... getting value",)
+                # yapf: enable
 
                 (__, value) = node.value
 
             # else, return the default value (which we're already doing)
             else:
 
-                debug_print(
-                    f"... key not found",
-                    f"... passing",
-                )
+                # yapf: disable
+                debug_print(f"... key not found", f"... passing",)
+                # yapf: enable
 
                 pass
 
         # else, do nothing
         else:
 
-            debug_print(
-                f"... there is no chain",
-                f"... passing",
-            )
+            # yapf: disable
+            debug_print(f"... there is no chain", f"... passing",)
+            # yapf: enable
 
             pass
 
@@ -654,15 +666,13 @@ class HashTable:
         Returns the removed value and the hash table's new item count.
         """
 
+        # yapf: disable
         def debug_print(*messages):
-            self.debug_print(
-                f"pop_item({repr(key)})",
-                *messages,
-                local_debug=local_debug,
-            )
+            self.debug_print(f"pop_item({repr(key)})", *messages, local_debug=local_debug)
             return
 
         debug_print()
+        # yapf: enable
 
         index = self.hash_index(key)
         chain = self.__array[index]
@@ -671,7 +681,9 @@ class HashTable:
         # if there's a chain at `index`, then...
         if chain is not None:
 
+            # yapf: disable
             debug_print(f"... there is a chain",)
+            # yapf: enable
 
             # search it for `(key, value)`
             node = self.find_node_by_key(key, chain)
@@ -679,10 +691,9 @@ class HashTable:
             # if it exists, remove it
             if node is not None:
 
-                debug_print(
-                    f"... key found",
-                    f"... deleting (key, value)",
-                )
+                # yapf: disable
+                debug_print(f"... key found", f"... deleting (key, value)",)
+                # yapf: enable
 
                 self.__item_count -= 1
                 (__, value) = chain.pop_node(node)
@@ -690,30 +701,27 @@ class HashTable:
                 # if the chain is now empty, remove it
                 if len(chain) == 0:
 
-                    debug_print(
-                        f"... chain is empty",
-                        f"... deleting",
-                    )
+                    # yapf: disable
+                    debug_print(f"... chain is empty", f"... deleting",)
+                    # yapf: enable
 
                     self.__array[index] = None
 
             # else, do nothing
             else:
 
-                debug_print(
-                    f"... key not found",
-                    f"... passing",
-                )
+                # yapf: disable
+                debug_print(f"... key not found", f"... passing",)
+                # yapf: enable
 
                 pass
 
         # else, do nothing
         else:
 
-            debug_print(
-                f"... there is no chain",
-                f"... passing",
-            )
+            # yapf: disable
+            debug_print(f"... there is no chain", f"... passing",)
+            # yapf: enable
 
             pass
 

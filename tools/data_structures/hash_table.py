@@ -11,7 +11,7 @@ from tools.data_structures.doubly_linked_list import DoublyLinkedList
 class HashTable:
     """
     A hash table with `bucket_count` buckets
-    that accepts string keys
+    that accepts string keys.
 
     Implement this.
     """
@@ -65,56 +65,89 @@ class HashTable:
 
         return
 
+    #-----------------------------------------------------------
+
     def __len__(self):
         return self.item_count
+
+
+    #-----------------------------------------------------------
 
     @property
     def item_count(self):
         return self.__item_count
 
+    #-----------------------------------------------------------
+
     @property
     def bucket_count(self):
         return self.__bucket_count
+
+    #-----------------------------------------------------------
 
     @property
     def min_bucket_count(self):
         return self.__min_bucket_count
 
+
+    #-----------------------------------------------------------
+
     @property
     def max_bucket_count(self):
         return self.__max_bucket_count
+
+
+    #-----------------------------------------------------------
 
     @property
     def resize_factor(self):
         return self.__resize_factor
 
+
+    #-----------------------------------------------------------
+
     @property
     def resize_up_factor(self):
         return self.__resize_up_factor
+
+
+    #-----------------------------------------------------------
 
     @property
     def resize_down_factor(self):
         return self.__resize_down_factor
 
+
+    #-----------------------------------------------------------
+
     @property
     def load_before_resize_up(self):
         return self.__load_before_resize_up
+
+
+    #-----------------------------------------------------------
 
     @property
     def load_before_resize_down(self):
         return self.__load_before_resize_down
 
+
+    #-----------------------------------------------------------
+
     @property
     def default_value(self):
         return self.__default_value
+
+
+    #-----------------------------------------------------------
 
     @property
     def hash(self):
         return self.__hash
 
-    ########################################
+    ############################################################
     #   hashing functions
-    ########################################
+    ############################################################
 
     hashers = (
         "naive",
@@ -182,9 +215,9 @@ class HashTable:
 
         return s_hash
 
-    ########################################
+    ############################################################
     #   indexing
-    ########################################
+    ############################################################
 
     def hash_index(self, key):
         """
@@ -209,9 +242,9 @@ class HashTable:
 
         return node
 
-    ########################################
+    ############################################################
     #   table mutation
-    ########################################
+    ############################################################
 
     @property
     def load_factor(self):
@@ -384,9 +417,9 @@ class HashTable:
 
         return
 
-    ########################################
+    ############################################################
     #   item access
-    ########################################
+    ############################################################
 
     def push_item(self, key, value, should_resize=True):
         """
@@ -605,13 +638,13 @@ class HashTable:
         # print(f"array[{repr(index)}] := {repr(value)}")
         return (value, self.__item_count)
 
-    ####################
+    ########################################
     #   other names
-    ####################
+    ########################################
 
-    #-------------------
+    #---------------------------------------
     #   push_item
-    #-------------------
+    #---------------------------------------
 
     def __setitem__(self, key, value):
         self.push_item(key, value)
@@ -626,9 +659,9 @@ class HashTable:
     def push(self, key, value):
         return self.push_item(key, value)
 
-    #-------------------
+    #---------------------------------------
     #   find_item
-    #-------------------
+    #---------------------------------------
 
     def __getitem__(self, key):
         return self.find_item(key)
@@ -639,9 +672,9 @@ class HashTable:
     def find(self, key):
         return self.find_item(key)
 
-    #-------------------
+    #---------------------------------------
     #   pop_item
-    #-------------------
+    #---------------------------------------
 
     def __delitem__(self, key):
         self.pop_item(key)

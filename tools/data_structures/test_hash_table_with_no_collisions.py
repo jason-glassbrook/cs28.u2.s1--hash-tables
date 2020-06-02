@@ -6,12 +6,13 @@ Does not collide with DJB2 or FNV-1-64. But could collide with other hashes.
 """
 
 import unittest
-from hashtable import HashTable
+from .hash_table import HashTable
+
 
 class TestHashTable(unittest.TestCase):
 
     def test_hash_table_insertion_and_retrieval(self):
-        ht = HashTable(0x10000)
+        ht = HashTable(bucket_count=0x10000)
 
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")
@@ -25,7 +26,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value == "val-2")
 
     def test_hash_table_pution_overwrites_correctly(self):
-        ht = HashTable(0x10000)
+        ht = HashTable(bucket_count=0x10000)
 
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")
@@ -43,7 +44,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value == "new-val-2")
 
     def test_hash_table_removes_correctly(self):
-        ht = HashTable(0x10000)
+        ht = HashTable(bucket_count=0x10000)
 
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")
@@ -68,7 +69,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value is None)
 
     def test_hash_table_resize(self):
-        ht = HashTable(0x10000)
+        ht = HashTable(bucket_count=0x10000)
 
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")
@@ -76,7 +77,7 @@ class TestHashTable(unittest.TestCase):
 
         ht.resize()
 
-        self.assertTrue(len(ht.storage) == 0x20000)
+        self.assertTrue(ht.bucket_count == 0x20000)
 
         return_value = ht.get("key-0")
         self.assertTrue(return_value == "val-0")
@@ -85,5 +86,6 @@ class TestHashTable(unittest.TestCase):
         return_value = ht.get("key-2")
         self.assertTrue(return_value == "val-2")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
